@@ -36,6 +36,8 @@ ISHOCONとは `Iikanjina SHOwwin CONtest` の略で、[ISUCON](http://isucon.net
   * Top10入りしたISHOCON2のイベント参加記録です。
 * [ISHOCON2を意地でPythonで20万点だした](http://www.denzow.me/entry/2018/08/29/001136) (by [@denzowill](https://twitter.com/denzowill))
   * Python実装で20万点超えていてすごい…
+* [今年も isucon を開催しました！](https://tech.basicinc.jp/articles/180) (by [@rorensu2236](https://twitter.com/rorensu2236))
+  * [株式会社ベーシック](https://basicinc.jp/)さんの社内ISUCONで使っていただきました！
 
 ## ISHOCONシリーズ
 * [ISHOCON1](https://github.com/showwin/ISHOCON1)
