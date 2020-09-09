@@ -16,7 +16,7 @@ ISHOCONとは `Iikanjina SHOwwin CONtest` の略で、[ISUCON](http://isucon.net
 ## 問題詳細
 * マニュアル: [ISHOCON2マニュアル](https://github.com/showwin/ISHOCON2/blob/master/doc/manual.md)
 * アプリケーションAMI: `ami-0ec5ab0a6192bf279`
-* ベンチマーカーAMI: `ami-78b66107`
+* ベンチマーカーAMI: `ami-01bb9bea553a65ca8`
 * インスタンスタイプ: `c4.large` (アプリ、ベンチ共に)
 * 参考実装言語: Ruby, Python, Go, PHP, NodeJS, Crystal
 * 推奨実施時間: 1人で8時間
