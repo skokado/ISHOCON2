@@ -76,9 +76,8 @@ var clients []http.Client
 func createClients(size int) {
 	clients = make([]http.Client, size)
 	for i := 0; i < size; i++ {
-		tr := &http.Transport{
-			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-		}
+		tr := http.DefaultTransport.(*http.Transport).Clone()
+		tr.TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 		if err := http2.ConfigureTransport(tr); err != nil {
 			log.Fatalf("Failed to configure h2 transport: %s", err)
 		}
