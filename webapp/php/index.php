@@ -203,5 +203,6 @@ Flight::route('POST /vote', function () {
 });
 
 Flight::route('GET /initialize', db_initialize);
+Flight::route('GET /health', True);
 
 Flight::start();

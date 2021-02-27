@@ -249,6 +249,10 @@ app.get('/initialize', (_, res) => {
         res.send('Finish'))
 })
 
+app.get('/health', (_, res) => {
+    res.send('OK')
+})
+
 var server = app.listen(8080, function () {
     var host = server.address().address;
     var port = server.address().port;

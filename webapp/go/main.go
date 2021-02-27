@@ -185,5 +185,9 @@ func main() {
 		c.String(http.StatusOK, "Finish")
 	})
 
+	r.GET("/health", func(c *gin.Context) {
+		c.String(http.StatusOK, "OK")
+	})
+
 	r.Run(":8080")
 }

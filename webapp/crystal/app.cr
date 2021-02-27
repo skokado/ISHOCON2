@@ -232,4 +232,7 @@ get "/initialize" do
   db_initialize
 end
 
+get "/health" do
+end
+
 Kemal.run port = 8080
