@@ -9,4 +9,5 @@ sudo mysql -u root -pishocon -e 'GRANT ALL ON *.* TO ishocon;' && \
 cd ~/data && tar -jxvf ishocon2.dump.tar.bz2 && sudo mysql -u root -pishocon ishocon2 < ~/data/ishocon2.dump
 
 echo 'setup completed.'
-tail -f /dev/null
+
+exec "$@"

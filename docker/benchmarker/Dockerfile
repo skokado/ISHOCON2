@@ -1,12 +1,11 @@
 FROM ubuntu:18.04
-MAINTAINER showwin <showwin_kmc@yahoo.co.jp>
 
 RUN apt-get update
 RUN apt-get install -y wget
 
 # Go のインストール
-RUN wget https://dl.google.com/go/go1.10.2.linux-amd64.tar.gz && \
-    tar -C /usr/local -xzf go1.10.2.linux-amd64.tar.gz
+RUN wget -q https://dl.google.com/go/go1.13.15.linux-amd64.tar.gz && \
+    tar -C /usr/local -xzf go1.13.15.linux-amd64.tar.gz
 ENV PATH $PATH:/usr/local/go/bin
 ENV GOROOT /usr/local/go
 ENV GOPATH $HOME/.local/go
@@ -17,16 +16,19 @@ RUN ["/bin/bash", "-c", "debconf-set-selections <<< 'mysql-server mysql-server/r
 RUN ["/bin/bash", "-c", "debconf-set-selections <<< 'mysql-service mysql-server/mysql-apt-config string 4'"]
 RUN apt-get install -y mysql-server
 
-COPY admin/ admin/
+COPY admin/ /root/admin/
 
 # build benchmark
 RUN apt-get install -y git
-RUN cd /admin && go get -t -d -v ./... && go build -o benchmark benchmarker/*.go
-RUN mv /admin/benchmark ~/
+RUN cd /root/admin/benchmarker && go build -o benchmark *.go
+RUN cp /root/admin/benchmarker/benchmark /root/benchmark
 
 # MySQL 初期設定
-RUN cp /admin/config/my.cnf /etc/mysql/my.cnf
-
-COPY docker/start_bench.sh /docker/start_bench.sh
+RUN cp /root/admin/config/my.cnf /etc/mysql/my.cnf
 
 WORKDIR /root
+
+COPY docker/benchmarker/entrypoint.sh /root/entrypoint.sh
+ENTRYPOINT ["/root/entrypoint.sh"]
+
+CMD /root/benchmark --ip $TARGET:443

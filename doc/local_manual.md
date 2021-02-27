@@ -3,6 +3,21 @@
 ```
 $ git clone git@github.com:showwin/ISHOCON2.git
 $ cd ISHOCON2
+```
+
+`docker-compose.yaml` の
+```
+version: '3.0'
+services:
+  app:
+    build: 
+      context: .
+      dockerfile: ./docker/app/python/Dockerfile
+```
+で dockerfile のパスを使いたい言語に合わせる。
+
+```
+$ docker-compose build
 $ docker-compose up
 # app_1 と bench_1 のログに 'setup completed.' と出たら起動完了
 ```
