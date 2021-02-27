@@ -1,8 +1,10 @@
 version: '3.0'
 services:
   app:
-    image: showwin/ishocon2_app:latest
-    command: /docker/start_app.sh
+    build: 
+      context: .
+      dockerfile: ./docker/app/python/Dockerfile
+    command: tail -f /dev/null
     volumes:
       - storage_app:/var/lib/mysql
       - ./webapp:/home/ishocon/webapp
@@ -11,11 +13,13 @@ services:
 
   bench:
     image: showwin/ishocon2_bench:latest
-    command: /docker/start_bench.sh
+    command: tail -f /dev/null
     volumes:
       - storage_bench:/var/lib/mysql
     links:
       - app
+    environment: 
+      - TARGET=app
 
 volumes:
   storage_bench:

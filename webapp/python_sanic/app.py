@@ -237,5 +237,9 @@ async def get_initialize(request):
     return HTTPResponse('init')
 
 
+@app.route('/health')
+async def get_health(request):
+    return HTTPResponse('OK')
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, workers=1, access_log=True)

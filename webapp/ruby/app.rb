@@ -161,4 +161,7 @@ SQL
   get '/initialize' do
     db_initialize
   end
+
+  get '/health' do
+  end
 end

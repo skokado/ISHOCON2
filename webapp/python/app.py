@@ -215,7 +215,11 @@ def post_vote():
 @app.route('/initialize')
 def get_initialize():
     db_initialize()
+    return
 
+@app.route('/health')
+def get_health():
+    return
 
 if __name__ == "__main__":
     app.run()
