@@ -19,7 +19,7 @@ import (
 func getInitialize() {
 	log.Print("Start GET /initialize")
 	finishTime := time.Now().Add(10 * time.Second)
-	httpsRequest("GET", "/initialize", nil)
+	httpRequest("GET", "/initialize", nil)
 	if time.Now().Sub(finishTime) > 0 {
 		log.Print("Timeover at GET /initialize")
 		os.Exit(1)
@@ -34,14 +34,14 @@ func postVote(v Vote) bool {
 	prm.Add("candidate", v.Candidate)
 	prm.Add("keyword", v.Keyword)
 	prm.Add("vote_count", v.VoteCount)
-	if httpsRequest("POST", "/vote", prm) == 200 {
+	if httpRequest("POST", "/vote", prm) == 200 {
 		return true
 	}
 	return false
 }
 
 func getIndex() bool {
-	if httpsRequest("GET", "/", nil) == 200 {
+	if httpRequest("GET", "/", nil) == 200 {
 		return true
 	}
 	return false
@@ -49,7 +49,7 @@ func getIndex() bool {
 
 func getCandidate() bool {
 	id := strconv.Itoa(getRand(1, 30))
-	if httpsRequest("GET", "/candidates/"+id, nil) == 200 {
+	if httpRequest("GET", "/candidates/"+id, nil) == 200 {
 		return true
 	}
 	return false
@@ -58,14 +58,14 @@ func getCandidate() bool {
 func getPoliticalParty() bool {
 	set := []string{"国民元気党", "国民10人大活躍党", "夢実現党", "国民平和党"}
 	party := set[getRand(0, 3)]
-	if httpsRequest("GET", "/political_parties/"+party, nil) == 200 {
+	if httpRequest("GET", "/political_parties/"+party, nil) == 200 {
 		return true
 	}
 	return false
 }
 
 func getCSS() bool {
-	if httpsRequest("GET", "/css/bootstrap.min.css", nil) == 200 {
+	if httpRequest("GET", "/css/bootstrap.min.css", nil) == 200 {
 		return true
 	}
 	return false
@@ -86,8 +86,8 @@ func createClients(size int) {
 	rand.Seed(time.Now().Unix())
 }
 
-func httpsRequest(method string, path string, params url.Values) int {
-	req, _ := http.NewRequest(method, host+path, strings.NewReader(params.Encode()))
+func httpRequest(method string, path string, params url.Values) int {
+	req, _ := http.NewRequest(method, origin+path, strings.NewReader(params.Encode()))
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	client := clients[rand.Intn(len(clients))]
 
@@ -101,8 +101,8 @@ func httpsRequest(method string, path string, params url.Values) int {
 	return resp.StatusCode
 }
 
-func httpsRequestDoc(method string, path string, params url.Values) *goquery.Document {
-	req, _ := http.NewRequest(method, host+path, strings.NewReader(params.Encode()))
+func httpRequestDoc(method string, path string, params url.Values) *goquery.Document {
+	req, _ := http.NewRequest(method, origin+path, strings.NewReader(params.Encode()))
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	client := clients[rand.Intn(len(clients))]
 

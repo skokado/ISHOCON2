@@ -14,7 +14,7 @@ app = Flask(__name__, static_folder=str(static_folder), static_url_path='')
 app.secret_key = os.environ.get('ISHOCON2_SESSION_SECRET', 'showwin_happy')
 
 _config = {
-    'db_host': os.environ.get('ISHOCON2_DB_HOST', 'localhost'),
+    'db_host': os.environ.get('ISHOCON2_DB_HOST', 'db'),
     'db_port': int(os.environ.get('ISHOCON2_DB_PORT', '3306')),
     'db_username': os.environ.get('ISHOCON2_DB_USER', 'ishocon'),
     'db_password': os.environ.get('ISHOCON2_DB_PASSWORD', 'ishocon'),
@@ -215,11 +215,11 @@ def post_vote():
 @app.route('/initialize')
 def get_initialize():
     db_initialize()
-    return
+    return {}
 
 @app.route('/health')
 def get_health():
-    return
+    return {}
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host="0.0.0.0", port=8080, debug=True)

@@ -30,7 +30,7 @@ type Candidate struct {
 func setupVotes(size int, forValidate bool) []Vote {
 	var voteSet []Vote
 
-	db, err := sql.Open("mysql", "ishocon:ishocon@/ishocon2")
+	db, err := sql.Open("mysql", "ishocon:ishocon@tcp(db:3306)/ishocon2")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -139,7 +139,7 @@ func getRandKeyword() string {
 }
 
 func getCndInfo(name string) Candidate {
-	db, err := sql.Open("mysql", "ishocon:ishocon@/ishocon2")
+	db, err := sql.Open("mysql", "ishocon:ishocon@tcp(db:3306)/ishocon2")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -155,7 +155,7 @@ func getCndInfo(name string) Candidate {
 
 // 候補者名から政党名を返す
 func getPatryInfo(name string) string {
-	db, err := sql.Open("mysql", "ishocon:ishocon@/ishocon2")
+	db, err := sql.Open("mysql", "ishocon:ishocon@tcp(db:3306)/ishocon2")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -170,7 +170,7 @@ func getPatryInfo(name string) string {
 }
 
 func membersOf(party string) (members []string) {
-	db, err := sql.Open("mysql", "ishocon:ishocon@/ishocon2")
+	db, err := sql.Open("mysql", "ishocon:ishocon@tcp(db:3306)/ishocon2")
 	if err != nil {
 		panic(err.Error())
 	}

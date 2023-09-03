@@ -28,7 +28,7 @@ func main() {
 	user := getEnv("ISHOCON2_DB_USER", "ishocon")
 	pass := getEnv("ISHOCON2_DB_PASSWORD", "ishocon")
 	dbname := getEnv("ISHOCON2_DB_NAME", "ishocon2")
-	db, _ = sql.Open("mysql", user+":"+pass+"@/"+dbname)
+	db, _ = sql.Open("mysql", user+":"+pass+"@tcp(db:3306)/"+dbname)
 	db.SetMaxIdleConns(5)
 
 	gin.SetMode(gin.DebugMode)
