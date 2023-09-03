@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-var host = "http://127.0.0.1"
+var origin string
 var totalScore = 0
 var totalResp = map[bool]int{}
 var finished = false
@@ -18,20 +18,24 @@ func main() {
 	flag.Usage = func() {
 		fmt.Println(`Usage: ./benchmark [option]
 Options:
-  --workload	N	run benchmark with N workloads (default: 3)
-  --ip	IP	specify target IP Address (default: 127.0.0.1)
-	--debug		debug mode (DO NOT USE)`)
+  --workload	int		run benchmark with N workloads (default: 3)
+  --scheme		string	specify HTTP or HTTPS (default: http)
+  --host		string	specify target hostname or IP address (default: 127.0.0.1)
+  --port		int		specify port number (default: 80)
+  --debug		debug mode (DO NOT USE)`)
 	}
 
 	var (
 		workload = flag.Int("workload", 3, "")
-		ip       = flag.String("ip", "127.0.0.1", "")
+		scheme   = flag.String("scheme", "http", "")
+		host     = flag.String("host", "127.0.0.1", "")
+		port     = flag.String("port", "80", "")
 		debug    = flag.Bool("debug", false, "")
 	)
 	flag.Parse()
-	host = "https://" + *ip
+	origin = *scheme + "://" + *host + ":" + *port
 	if *debug {
-		host = "http://127.0.0.1:8080"
+		origin = "http://127.0.0.1:8080"
 	}
 
 	createClients(*workload * 5)

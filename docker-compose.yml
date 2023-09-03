@@ -1,26 +1,63 @@
 version: '3.0'
 services:
+  web:
+    image: nginx:stable-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./admin/ssl:/etc/nginx/ssl
+      - ./admin/config/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - app
+    networks:
+      - default
+
   app:
     build: 
       context: .
       dockerfile: ./docker/app/python/Dockerfile
-    command: tail -f /dev/null
+    command: python app.py
+    volumes:
+      - ./webapp/python:/app
+    environment:
+      - ISHOCON2_DB_HOST=db
+      - ISHOCON2_DB_PORT=3306
+      - ISHOCON2_DB_USER=ishocon
+      - ISHOCON2_DB_PASSWORD=ishocon
+      - ISHOCON2_DB_NAME=ishocon2
+    depends_on:
+      - db
+    networks:
+      - default
+
+  db:
+    image: mysql:5.7
+    environment:
+      - MYSQL_USER=ishocon
+      - MYSQL_PASSWORD=ishocon
+      - MYSQL_ROOT_PASSWORD=ishocon
+      - MYSQL_DATABASE=ishocon2
+    ports:
+      - "3306:3306"
     volumes:
       - storage_app:/var/lib/mysql
-      - ./webapp:/home/ishocon/webapp
-    ports:
-      - "443:443"
+    networks:
+      - default
 
   bench:
-    image: showwin/ishocon2_bench:latest
-    command: tail -f /dev/null
-    volumes:
-      - storage_bench:/var/lib/mysql
+    build:
+      context: .
+      dockerfile: ./docker/benchmarker/Dockerfile
     links:
       - app
     environment: 
       - TARGET=app
+    networks:
+      - default
 
 volumes:
-  storage_bench:
   storage_app:
+
+networks:
+  default:
